@@ -6,6 +6,7 @@
       :item="item"
       :index="index"
       v-on:remove="remove"
+      @edit_form="edit_form"
     ></Tim>
   </ul>
 </template>
@@ -20,6 +21,9 @@ export default {
   methods: {
     remove(id) {
       this.$emit("remove", id);
+    },
+    edit_form(id) {
+      this.$emit("edit_form", id);
     },
   },
 };

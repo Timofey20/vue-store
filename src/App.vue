@@ -1,19 +1,22 @@
 <template>
   <div id="app">
+    <EditFiles v-if="editWindowVisible"></EditFiles>
     <AddItem @addPeople="addPeople"></AddItem>
-    <Item :users="users" @remove="remove"></Item>
+    <Item :users="users" @remove="remove" @edit_form="edit_form"></Item>
   </div>
 </template>
 
 <script>
 import Item from "./components/Item";
 import AddItem from "./components/AddItem";
+import EditFiles from "./components/EditFiles";
 
 export default {
   name: "App",
   components: {
     Item,
     AddItem,
+    EditFiles,
   },
   data() {
     return {
@@ -22,6 +25,7 @@ export default {
         { id: 2, title: "anton", age: 24 },
         { id: 3, title: "elena", age: 55 },
       ],
+      editWindowVisible: false,
     };
   },
   methods: {
@@ -29,8 +33,10 @@ export default {
       this.users = this.users.filter((t) => t.id !== id);
     },
     addPeople(item) {
-      console.log(item);
       this.users.push(item);
+    },
+    edit_form(id) {
+      this.editWindowVisible = !this.editWindowVisible;
     },
   },
 };
@@ -43,6 +49,21 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   color: #2c3e50;
   margin-top: 60px;
-  margin-left: 50px;
+}
+.EditFiles {
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  background-color: rgb(172, 172, 172);
+  padding: 2em;
+}
+.edit_header {
+  text-align: center;
+}
+.edit_back {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 40px;
 }
 </style>
